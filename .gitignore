@@ -1,0 +1,8 @@
+# npm package dependencies
+/node_modules
+public
+.env
+.env.prod
+
+# production
+/build
