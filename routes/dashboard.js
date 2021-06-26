@@ -2,10 +2,8 @@ const router = require("express").Router();
 
 function isAuthorized(req, res, next) {
   if (req.user) {
-    console.log("Logged In");
     next();
   } else {
-    console.log("Not Logged In");
     res.redirect("/test");
   }
 }
