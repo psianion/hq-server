@@ -7,18 +7,18 @@ const pokemonSchema = mongoose.Schema({
 });
 
 const teamSchema = mongoose.Schema({
-  pokemon1: [pokemonSchema],
-  pokemon2: [pokemonSchema],
-  pokemon3: [pokemonSchema],
-  pokemon4: [pokemonSchema],
-  pokemon5: [pokemonSchema],
-  pokemon6: [pokemonSchema],
+  pokemon1: pokemonSchema,
+  pokemon2: pokemonSchema,
+  pokemon3: pokemonSchema,
+  pokemon4: pokemonSchema,
+  pokemon5: pokemonSchema,
+  pokemon6: pokemonSchema,
 });
 
 const leaderSchema = mongoose.Schema({
   region: String,
   leaderGymName: String,
-  leaderTeam: [teamSchema],
+  leaderTeam: teamSchema,
   leaderWins: Number,
   leaderMatches: Number,
 });
@@ -26,7 +26,7 @@ const leaderSchema = mongoose.Schema({
 const tomSchema = mongoose.Schema({
   region: String,
   currentGym: String,
-  gymTeam: [teamSchema],
+  gymTeam: teamSchema,
   gymWins: Number,
   gymMatches: Number,
 });
@@ -47,8 +47,8 @@ const userSchema = mongoose.Schema({
   buddy: String,
   homeCommunity: String,
   isLeader: Boolean,
-  leaderInfo: [leaderSchema],
-  towerOfMastery: [tomSchema],
+  leaderInfo: leaderSchema,
+  towerOfMastery: tomSchema,
 });
 
 module.exports = mongoose.model("User", userSchema);
