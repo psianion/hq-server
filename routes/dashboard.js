@@ -4,12 +4,18 @@ function isAuthorized(req, res, next) {
   if (req.user) {
     next();
   } else {
-    res.redirect("/test");
+    res.json({
+      messae: "this is nmot dashboard",
+    });
   }
 }
 
 router.get("/", isAuthorized, function (req, res, next) {
-  res.send("This is the dashboard");
+  console.log(req.user);
+  res.json({
+    messae: "this is dashboard",
+    user: req.user,
+  });
 });
 
 module.exports = router;

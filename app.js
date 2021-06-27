@@ -22,8 +22,14 @@ mongoose.connect(
   () => console.log("connected to db")
 );
 
+const corsOptions = {
+  origin: "http://localhost:3000", // allow to server to accept request from different origin
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
 const app = express();
-app.use(cors()); //Cross-Origin Resource Sharing
+app.use(cors(corsOptions)); //Cross-Origin Resource Sharing
 app.use(express.json());
 app.use(
   session({
@@ -43,6 +49,29 @@ app.use(passport.session());
 app.use("/test", test);
 app.use("/auth", auth);
 app.use("/dashboard", dashboard);
+
+const isAuthorized = (req, res, next) => {
+  if (!req.user) {
+    res.status(401).json({
+      authenticated: false,
+      message: "user has not been authenticated",
+    });
+  } else {
+    next();
+  }
+};
+
+// if it's already login, send the profile response,
+// otherwise, send a 401 response that the user is not authenticated
+// authCheck before navigating to home page
+app.get("/", isAuthorized, (req, res) => {
+  res.status(200).json({
+    authenticated: true,
+    message: "user successfully authenticated",
+    user: req.user,
+    cookies: req.cookies,
+  });
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log("server is running..."));
