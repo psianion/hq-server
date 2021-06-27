@@ -7,7 +7,7 @@ router.get(
   "/redirect",
   passport.authenticate("discord", {
     failureRedirect: "/auth/login/failed",
-    successRedirect: process.env.CLIENT_HOME_PAGE_URL,
+    successRedirect: `${process.env.CLIENT_HOME_PAGE_URL}` + "/profile",
   }),
   function (req, res, next) {
     console.log(req.user);
