@@ -5,7 +5,7 @@ function isAuthorized(req, res, next) {
     next();
   } else {
     res.json({
-      messae: "this is nmot dashboard",
+      message: "this is not dashboard",
     });
   }
 }
@@ -13,7 +13,7 @@ function isAuthorized(req, res, next) {
 router.get("/", isAuthorized, function (req, res, next) {
   console.log(req.user);
   res.json({
-    messae: "this is dashboard",
+    message: "this is dashboard",
     user: req.user,
   });
 });

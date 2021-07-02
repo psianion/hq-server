@@ -4,7 +4,6 @@ require("dotenv").config();
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
-const discordOAuth = require("./services/discordOAuth");
 
 const test = require("./routes/test");
 const auth = require("./routes/auth");
@@ -23,7 +22,7 @@ mongoose.connect(
 );
 
 const corsOptions = {
-  origin: "http://localhost:3000", // allow to server to accept request from different origin
+  origin: process.env.CLIENT_HOME_PAGE_URL, // allow to server to accept request from different origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
@@ -49,29 +48,6 @@ app.use(passport.session());
 app.use("/test", test);
 app.use("/auth", auth);
 app.use("/dashboard", dashboard);
-
-const isAuthorized = (req, res, next) => {
-  if (!req.user) {
-    res.status(401).json({
-      authenticated: false,
-      message: "user has not been authenticated",
-    });
-  } else {
-    next();
-  }
-};
-
-// if it's already login, send the profile response,
-// otherwise, send a 401 response that the user is not authenticated
-// authCheck before navigating to home page
-app.get("/", isAuthorized, (req, res) => {
-  res.status(200).json({
-    authenticated: true,
-    message: "user successfully authenticated",
-    user: req.user,
-    cookies: req.cookies,
-  });
-});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
