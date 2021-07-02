@@ -25,7 +25,7 @@ const corsOptions = {
   origin: `${process.env.CLIENT_HOME_PAGE_URL}`, // allow to server to accept request from different origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: false,
+  credentials: true,
   preflightContinue: false,
 };
 
