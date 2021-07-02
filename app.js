@@ -30,6 +30,7 @@ const corsOptions = {
     "X-Requested-With",
     "Access-Control-Request-Headers",
     "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Credentials",
     "Origin",
     "Accept",
     "Access-Control-Request-Method",
