@@ -24,7 +24,16 @@ mongoose.connect(
 const corsOptions = {
   origin: `${process.env.CLIENT_HOME_PAGE_URL}`, // allow to server to accept request from different origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "Access-Control-Request-Headers",
+    "Access-Control-Allow-Headers",
+    "Origin",
+    "Accept",
+    "Access-Control-Request-Method",
+  ],
   credentials: true,
   preflightContinue: false,
 };
