@@ -4,7 +4,7 @@ require("dotenv").config();
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
-
+const discordOAuth = require("./services/discordOAuth");
 const test = require("./routes/test");
 const auth = require("./routes/auth");
 const dashboard = require("./routes/dashboard");
