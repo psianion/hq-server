@@ -10,9 +10,7 @@ router.get(
     successRedirect: `${process.env.CLIENT_HOME_PAGE_URL}/profile`,
   }),
   function (req, res, next) {
-    console.log("1");
     console.log(req.user);
-    console.log("2");
   }
 );
 
@@ -23,6 +21,11 @@ router.get("/login/success", (req, res) => {
       message: "user has successfully authenticated",
       user: req.user,
       cookies: req.cookies,
+    });
+  } else {
+    res.json({
+      success: false,
+      message: "user has not successfully authenticated",
     });
   }
 });
