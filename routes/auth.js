@@ -10,7 +10,9 @@ router.get(
     successRedirect: `${process.env.CLIENT_HOME_PAGE_URL}/profile`,
   }),
   function (req, res, next) {
+    console.log("1");
     console.log(req.user);
+    console.log("2");
   }
 );
 
