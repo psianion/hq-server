@@ -46,10 +46,7 @@ app.use(express.json());
 app.use(
   session({
     secret: "HQ",
-    cookie: {
-      maxAge: 60000 * 60 * 24,
-    },
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     name: "discord.oauth2",
   })
