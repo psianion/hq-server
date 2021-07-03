@@ -43,10 +43,15 @@ const corsOptions = {
 const app = express();
 app.use(cors(corsOptions)); //Cross-Origin Resource Sharing
 app.use(express.json());
+app.set("trust proxy", 1); // trust first proxy
+
 app.use(
   session({
     secret: "HQ",
-    resave: false,
+    cookie: {
+      maxAge: 60000 * 60 * 24,
+    },
+    resave: true,
     saveUninitialized: false,
     name: "discord.oauth2",
   })
