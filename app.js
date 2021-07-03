@@ -31,6 +31,7 @@ const corsOptions = {
     "Access-Control-Request-Headers",
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Credentials",
+    "Access-Control-Allow-Origin",
     "Origin",
     "Accept",
     "Access-Control-Request-Method",
