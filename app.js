@@ -5,6 +5,7 @@ const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
 const discordOAuth = require("./services/discordOAuth");
+const user = require("./routes/user");
 const test = require("./routes/test");
 const auth = require("./routes/auth");
 const dashboard = require("./routes/dashboard");
@@ -63,6 +64,7 @@ app.use(passport.session());
 
 //Routes
 app.use("/test", test);
+app.use("/user", user);
 app.use("/auth", auth);
 app.use("/dashboard", dashboard);
 
