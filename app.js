@@ -51,8 +51,8 @@ app.use(
     secret: "HQ",
     cookie: {
       maxAge: 60000 * 60 * 24,
-      // sameSite: "none",
-      // secure: true,
+      sameSite: "none",
+      secure: true,
     },
     resave: true,
     saveUninitialized: false,
