@@ -2,14 +2,16 @@ const router = require("express").Router();
 const User = require("../models/user");
 
 router.get("/:id", async (req, res) => {
-  User.findOne({ _id: req.params.id }, function (err, info) {
-    if (err) {
-      console.log(err);
-      res.send({ success: false, message: "Couldn't Find Me!" });
-    } else {
-      res.send({ success: true, message: "Found Me!", data: info });
-    }
-  });
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    User.findById(req.params.id, function (err, info) {
+      if (err) {
+        console.log(err);
+        res.json({ success: false, message: "Couldn't Find Me!" });
+      } else {
+        res.json({ success: true, message: "Found Me!", data: info });
+      }
+    });
+  }
 });
 
 router.post("/setup", async (req, res) => {
@@ -28,9 +30,9 @@ router.post("/setup", async (req, res) => {
     function (err, info) {
       if (err) {
         console.log(err);
-        res.send({ success: false, message: "Couldn't Set Up!" });
+        res.json({ success: false, message: "Couldn't Set Up!" });
       } else {
-        res.send({ success: true, message: "Set Up!" });
+        res.json({ success: true, message: "Set Up!" });
       }
     }
   );
