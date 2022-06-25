@@ -18,9 +18,9 @@ passport.deserializeUser(async (id, done) => {
 passport.use(
   new DiscordStrategy(
     {
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: process.env.CLIENT_REDIRECT_URI,
+      clientID: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+      callbackURL: process.env.DISCORD_CLIENT_REDIRECT_URI,
       scope: scopes,
     },
     async function (accessToken, refreshToken, profile, done) {

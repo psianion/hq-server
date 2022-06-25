@@ -1,47 +1,22 @@
 const router = require("express").Router();
 const passport = require("passport");
 
-router.get("/", passport.authenticate("discord"));
+//@route GET /auth/discord
+router.get("/discord", passport.authenticate("discord"));
 
+//@route GET /auth/discord/callback
 router.get(
-  "/redirect",
-  passport.authenticate("discord", {
-    failureRedirect: "/auth/login/failed",
-    successRedirect: `${process.env.CLIENT_HOME_PAGE_URL}/`,
-  }),
-  function (req, res, next) {
-    console.log(req.user);
+  "/discord/callback",
+  passport.authenticate("discord"),
+  (req, res, next) => {
+    res.redirect(`${process.env.CLIENT_HOME_PAGE_URL}/profile`);
   }
 );
 
-router.get("/login/success", (req, res) => {
-  if (req.user) {
-    res.status(200).json({
-      success: true,
-      message: "user has successfully authenticated",
-      user: req.user,
-      cookies: req.cookies,
-    });
-  } else {
-    res.json({
-      success: false,
-      message: "user has not successfully authenticated",
-    });
-  }
-});
-
-// when login failed, send failed msg
-router.get("/login/failed", (req, res) => {
-  res.status(401).json({
-    success: false,
-    message: "user failed to authenticate.",
-  });
-});
-
-// When logout, redirect to client
+// @route   /auth/logout
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect(process.env.CLIENT_HOME_PAGE_URL);
+  res.redirect(`${process.env.CLIENT_HOME_PAGE_URL}/`);
 });
 
 module.exports = router;

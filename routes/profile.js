@@ -1,15 +1,17 @@
 const router = require("express").Router();
 const User = require("../models/user");
 
-router.get("/:id", async (req, res) => {
-  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-    User.findById(req.params.id, function (err, info) {
-      if (err) {
-        console.log(err);
-        res.json({ success: false, message: "Couldn't Find Me!" });
-      } else {
-        res.json({ success: true, message: "Found Me!", data: info });
-      }
+router.get("/", (req, res) => {
+  if (!req.user) {
+    res.json({
+      success: false,
+      message: "user failed to authenticate.",
+    });
+  } else {
+    res.status(200).json({
+      success: true,
+      message: "user has successfully authenticated",
+      data: req.user,
     });
   }
 });
@@ -30,9 +32,9 @@ router.post("/setup", async (req, res) => {
     function (err, info) {
       if (err) {
         console.log(err);
-        res.json({ success: false, message: "Couldn't Set Up!" });
+        res.json({ success: false, message: "Setup was not successful" });
       } else {
-        res.json({ success: true, message: "Set Up!" });
+        res.json({ success: true, message: "Set Up success!" });
       }
     }
   );
