@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
 const cookieSession = require("cookie-session");
+const session = require("express-session");
 const passport = require("passport");
 const test = require("./routes/test");
 const auth = require("./routes/auth");
@@ -47,6 +48,8 @@ app.use(cors(corsOptions)); //Cross-Origin Resource Sharing
 app.use(express.json());
 app.set("trust proxy", 1); // trust first proxy
 
+{
+  /*
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
@@ -56,23 +59,22 @@ app.use(
   })
 );
 
-{
-  /*
+*/
+}
+
 app.use(
   session({
-    secret: "HQ",
+    secret: [process.env.COOKIE_SESSION_KEY],
     cookie: {
       maxAge: 60000 * 60 * 24,
-      // sameSite: "none",
-      // secure: true,
+      //sameSite: "none",
+      //secure: true,
     },
     resave: true,
     saveUninitialized: false,
     name: "discord.oauth2",
   })
 );
-*/
-}
 
 app.use(passport.initialize());
 app.use(passport.session());
