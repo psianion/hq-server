@@ -9,7 +9,7 @@ router.get(
   "/discord/callback",
   passport.authenticate("discord"),
   (req, res, next) => {
-    res.redirect(`${process.env.CLIENT_HOME_PAGE_URL}/profile`);
+    res.redirect(`${process.env.CLIENT_HOME_PAGE_URL}/`);
   }
 );
 
