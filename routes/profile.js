@@ -24,8 +24,12 @@ router.post("/setup", async (req, res) => {
     {
       $set: {
         ign: data.ign,
-        trainerCode: data.trainerCode,
-        trainerTeam: data.trainerTeam,
+        game: {
+          pokemongo: {
+            trainerCode: data.trainerCode,
+            trainerTeam: data.trainerTeam,
+          },
+        },
       },
     },
     { new: true },

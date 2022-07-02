@@ -33,12 +33,6 @@ passport.use(
             discordId: profile.id,
             discordName: profile.username,
             email: profile.email,
-            role: "USER",
-            totalWins: 0,
-            totalMatches: 0,
-            xp: 0,
-            level: 0,
-            isLeader: false,
           });
           const savedUser = await newUser.save();
           done(null, savedUser);

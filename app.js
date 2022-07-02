@@ -67,8 +67,8 @@ app.use(
     secret: [process.env.COOKIE_SESSION_KEY],
     cookie: {
       maxAge: 60000 * 60 * 24,
-      sameSite: "none",
-      secure: true,
+      // sameSite: "none",
+      // secure: true,
     },
     resave: true,
     saveUninitialized: false,
@@ -83,6 +83,7 @@ app.use(passport.session());
 app.use("/test", test);
 app.use("/auth", auth);
 app.use("/profile", profile);
+app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

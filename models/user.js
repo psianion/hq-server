@@ -1,54 +1,38 @@
 const mongoose = require("mongoose");
 
-const pokemonSchema = mongoose.Schema({
-  name: String,
-  cp: Number,
-  isShadow: Boolean,
-});
-
-const teamSchema = mongoose.Schema({
-  pokemon1: pokemonSchema,
-  pokemon2: pokemonSchema,
-  pokemon3: pokemonSchema,
-  pokemon4: pokemonSchema,
-  pokemon5: pokemonSchema,
-  pokemon6: pokemonSchema,
-});
-
-const leaderSchema = mongoose.Schema({
-  region: String,
-  leaderGymName: String,
-  leaderTeam: teamSchema,
-  leaderWins: Number,
-  leaderMatches: Number,
-});
-
-const tomSchema = mongoose.Schema({
-  region: String,
-  currentGym: String,
-  gymTeam: teamSchema,
-  gymWins: Number,
-  gymMatches: Number,
-});
-
 const userSchema = mongoose.Schema({
-  ign: String,
-  discordName: String,
-  discordId: String,
-  email: String,
-  trainerCode: String,
-  trainerTeam: String,
-  role: String,
-  level: Number,
-  nationality: String,
-  totalWins: Number,
-  totalMatches: Number,
-  xp: Number,
-  buddy: String,
-  homeCommunity: String,
-  isLeader: Boolean,
-  leaderInfo: leaderSchema,
-  towerOfMastery: tomSchema,
+  ign: mongoose.SchemaTypes.String,
+  discordName: mongoose.SchemaTypes.String,
+  discordId: mongoose.SchemaTypes.String,
+  email: mongoose.SchemaTypes.String,
+  nationality: mongoose.SchemaTypes.String,
+  role: {
+    type: mongoose.SchemaTypes.String,
+    default: "TRAINER",
+  },
+  region: {
+    type: mongoose.SchemaTypes.String,
+  },
+  game: {
+    pokemongo: {
+      trainerCode: mongoose.SchemaTypes.String,
+      trainerLevel: mongoose.SchemaTypes.Number,
+      trainerTeam: mongoose.SchemaTypes.String,
+      homeCommunity: mongoose.SchemaTypes.String,
+      gbl: {
+        s11: {
+          currentMMR: mongoose.SchemaTypes.Number,
+          highestMMR: mongoose.SchemaTypes.Number,
+          rank: mongoose.SchemaTypes.String,
+        },
+      },
+      frontier: {
+        s6: {
+          teamName: mongoose.SchemaTypes.String,
+        },
+      },
+    },
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
