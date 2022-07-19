@@ -1,20 +1,42 @@
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
-  ign: mongoose.SchemaTypes.String,
   discordName: mongoose.SchemaTypes.String,
   discordId: mongoose.SchemaTypes.String,
   email: mongoose.SchemaTypes.String,
   nationality: mongoose.SchemaTypes.String,
   role: {
     type: mongoose.SchemaTypes.String,
-    default: "TRAINER",
+    default: "Trainer",
   },
   region: {
     type: mongoose.SchemaTypes.String,
   },
+  sprites: {
+    animated: {
+      type: mongoose.SchemaTypes.Boolean,
+      default: false,
+    },
+    avatar: {
+      type: mongoose.SchemaTypes.Array,
+      default: ["red", "leaf"],
+    },
+    activeAvatar: {
+      type: mongoose.SchemaTypes.String,
+      default: "red",
+    },
+    banner: {
+      type: mongoose.SchemaTypes.Array,
+      default: ["red", "leaf"],
+    },
+    activeBanner: {
+      type: mongoose.SchemaTypes.String,
+      default: "gyarados",
+    },
+  },
   game: {
     pokemongo: {
+      ign: mongoose.SchemaTypes.String,
       trainerCode: mongoose.SchemaTypes.String,
       trainerLevel: mongoose.SchemaTypes.Number,
       trainerTeam: mongoose.SchemaTypes.String,
