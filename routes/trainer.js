@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 router.get("/", async (req, res) => {
   User.find(
-    { "game.pokemongo.gbl": { $exists: true } },
+    { "game.pokemongo.gbl": { $exists: true }, nationality: "in" },
     {
       "game.pokemongo.gbl": 1,
       "game.pokemongo.ign": 1,
