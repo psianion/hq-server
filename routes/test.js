@@ -1,7 +1,11 @@
 const router = require("express").Router();
 
 router.get("/", function (req, res, next) {
-  res.json("API is working properly");
+  if (req.user) {
+    res.json("API is working properly");
+  } else {
+    res.json("bro, login no?");
+  }
 });
 
 module.exports = router;

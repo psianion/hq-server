@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
 
+const pokemonSchema = mongoose.Schema({
+  name: mongoose.SchemaTypes.String,
+  dex: mongoose.SchemaTypes.Number,
+  cp: mongoose.SchemaTypes.Number,
+  isShadow: mongoose.SchemaTypes.Boolean,
+});
+
 const userSchema = mongoose.Schema({
   discordName: mongoose.SchemaTypes.String,
   discordId: mongoose.SchemaTypes.String,
@@ -31,7 +38,7 @@ const userSchema = mongoose.Schema({
     },
     activeBanner: {
       type: mongoose.SchemaTypes.String,
-      default: "gyarados",
+      default: "redmap",
     },
   },
   game: {
@@ -41,16 +48,39 @@ const userSchema = mongoose.Schema({
       trainerLevel: mongoose.SchemaTypes.Number,
       trainerTeam: mongoose.SchemaTypes.String,
       homeCommunity: mongoose.SchemaTypes.String,
+      bf: {
+        s6: {
+          team: mongoose.SchemaTypes.String,
+          invite: mongoose.SchemaTypes.String,
+          isCaptain: {
+            type: mongoose.SchemaTypes.Boolean,
+            default: false,
+          },
+          groupWins: {
+            type: mongoose.SchemaTypes.Number,
+            default: 0,
+          },
+          groupMatches: {
+            type: mongoose.SchemaTypes.Number,
+            default: 0,
+          },
+          knockoutWins: {
+            type: mongoose.SchemaTypes.Number,
+            default: 0,
+          },
+          knockoutMatches: {
+            type: mongoose.SchemaTypes.Number,
+            default: 0,
+          },
+          groupPokemon: [pokemonSchema],
+          knockoutPokemon: [pokemonSchema],
+        },
+      },
       gbl: {
         s11: {
           currentMMR: mongoose.SchemaTypes.Number,
           highestMMR: mongoose.SchemaTypes.Number,
           rank: mongoose.SchemaTypes.String,
-        },
-      },
-      frontier: {
-        s6: {
-          teamName: mongoose.SchemaTypes.String,
         },
       },
     },

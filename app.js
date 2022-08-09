@@ -9,6 +9,8 @@ const test = require("./routes/test");
 const auth = require("./routes/auth");
 const profile = require("./routes/profile");
 const discordOAuth = require("./services/discordOAuth");
+const frontier = require("./routes/frontier");
+const trainer = require("./routes/trainer");
 
 // connect to db
 mongoose.connect(
@@ -82,7 +84,9 @@ app.use(passport.session());
 //Routes
 app.use("/test", test);
 app.use("/auth", auth);
+app.use("/frontier", frontier);
 app.use("/profile", profile);
+app.use("/trainer", trainer);
 app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3001;
