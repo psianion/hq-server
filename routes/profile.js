@@ -24,6 +24,8 @@ router.post("/setup", async (req, res) => {
     .replace(/(.{4})/g, "$1 ")
     .trim();
 
+  const ign = data.ign.replace(/\s/g, "");
+
   User.findOneAndUpdate(
     { _id: id },
     {
@@ -31,7 +33,7 @@ router.post("/setup", async (req, res) => {
         nationality: data.nationality,
         game: {
           pokemongo: {
-            ign: data.ign,
+            ign: ign,
             trainerCode: tc,
             trainerTeam: data.trainerTeam,
           },
