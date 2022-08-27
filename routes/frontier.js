@@ -8,39 +8,143 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/team", async (req, res) => {
+  let data = {
+    teamData: {},
+    players: [],
+    invitedPlayers: [],
+  };
+
+  data.teamData = await (await Frontier.find({ team: req.query.team }))[0];
+
+  data.players = await User.find(
+    {
+      "game.pokemongo.bf.s6.team": data.teamData.team,
+    },
+    {
+      "game.pokemongo.bf.s6.isCaptain": 1,
+      "game.pokemongo.bf.s6.groupWins": 1,
+      "game.pokemongo.bf.s6.groupMatches": 1,
+      "game.pokemongo.bf.s6.knockoutWins": 1,
+      "game.pokemongo.bf.s6.knockoutMatches": 1,
+      "game.pokemongo.ign": 1,
+      "game.pokemongo.trainerTeam": 1,
+      "sprites.activeAvatar": 1,
+    }
+  );
+
+  data.invitedPlayers = await User.find(
+    {
+      "game.pokemongo.bf.s6.invite": data.teamData.team,
+    },
+    {
+      "game.pokemongo.bf.s6.isCaptain": 1,
+      "game.pokemongo.bf.s6.groupWins": 1,
+      "game.pokemongo.bf.s6.groupMatches": 1,
+      "game.pokemongo.bf.s6.knockoutWins": 1,
+      "game.pokemongo.bf.s6.knockoutMatches": 1,
+      "game.pokemongo.ign": 1,
+      "game.pokemongo.trainerTeam": 1,
+      "sprites.activeAvatar": 1,
+    }
+  );
+
+  res.json(data);
+});
+
+router.post("/invite", async (req, res) => {
+  const { teamName, data } = req.body.teamName;
+
+  await User.findOne({ "game.pokemongo.ign": data }, async (err, info) => {
+    if (!info) {
+      return res.json({
+        success: false,
+        message: "User not registered",
+      });
+    } else {
+      if (info.game.pokemongo.bf.s6.team) {
+        return res.json({
+          success: false,
+          message: "User already in a team!",
+        });
+      } else {
+        info.game.pokemongo.bf.s6.invite = teamName;
+        info.save().catch((err) => console.log(err));
+        return res.json({
+          success: true,
+          message: "Invite Sent",
+        });
+      }
+    }
+  });
+});
+
+router.post("/invite/accept", async (req, res) => {
+  const { id, data } = req.body;
+
+  User.findOne(
+    {
+      _id: id,
+    },
+    (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        info.game.pokemongo.bf.s6.team = data;
+        info.game.pokemongo.bf.s6.invite = undefined;
+        info.game.pokemongo.bf.s6.isCaptain = false;
+        info.save().catch((err) => console.log(err));
+        return res.json({
+          success: true,
+          message: "Invite Accepted",
+        });
+      }
+    }
+  );
+});
+
 router.post("/create", async (req, res) => {
   const { id, data } = req.body;
 
-  try {
-    const newTeam = await Frontier.create({
-      team: data.frontierTeam,
-      players: {
-        player1: id,
-      },
-    });
-    await newTeam.save();
-    User.findOne(
-      {
-        _id: id,
-      },
-      (err, info) => {
-        if (err) {
-          console.log(err);
-        } else {
-          info.game.pokemongo.bf.s6.team = data.frontierTeam;
-          info.game.pokemongo.bf.s6.invite = undefined;
-          info.game.pokemongo.bf.s6.isCaptain = true;
-          info.save().catch((err) => console.log(err));
-        }
+  await Frontier.findOne({ team: data.frontierTeam }, async (err, info) => {
+    if (info) {
+      return res.json({
+        success: false,
+        message: "Team already exists!",
+      });
+    } else {
+      try {
+        const newTeam = await Frontier.create({
+          team: data.frontierTeam,
+          players: {
+            player1: id,
+          },
+        });
+        await newTeam.save();
+        User.findOne(
+          {
+            _id: id,
+          },
+          (err, info) => {
+            if (err) {
+              console.log(err);
+            } else {
+              info.game.pokemongo.bf.s6.team = data.frontierTeam;
+              info.game.pokemongo.bf.s6.invite = undefined;
+              info.game.pokemongo.bf.s6.isCaptain = true;
+              info.save().catch((err) => console.log(err));
+            }
+          }
+        );
+        return res.json({
+          success: true,
+          message: "Team Created! Invite Players!",
+        });
+      } catch (err) {
+        console.log(err);
       }
-    );
-    return res.json({
-      success: true,
-      message: "Team Created! Invite Players!",
-    });
-  } catch (err) {
-    console.log(err);
-  }
+    }
+  });
 });
 
 module.exports = router;

@@ -18,7 +18,10 @@ const frontierSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.Number,
     default: 0,
   },
-  logo: mongoose.SchemaTypes.String,
+  logo: {
+    type: mongoose.SchemaTypes.String,
+    default: "default",
+  },
   players: {
     player1: mongoose.SchemaTypes.String,
     player2: mongoose.SchemaTypes.String,
