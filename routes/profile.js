@@ -2,17 +2,27 @@ const router = require("express").Router();
 const User = require("../models/user");
 
 router.get("/", (req, res) => {
-  if (!req.user) {
-    res.json({
-      success: false,
-      message: "user failed to authenticate.",
+  if (req.query.id) {
+    User.findOne({ _id: req.query.id }, (err, data) => {
+      res.status(200).json({
+        success: true,
+        message: "user has successfully authenticated",
+        data: data,
+      });
     });
   } else {
-    res.status(200).json({
-      success: true,
-      message: "user has successfully authenticated",
-      data: req.user,
-    });
+    if (!req.user) {
+      res.json({
+        success: false,
+        message: "user failed to authenticate.",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "user has successfully authenticated",
+        data: req.user,
+      });
+    }
   }
 });
 
