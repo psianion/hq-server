@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const pokemonSchema = mongoose.Schema({
   name: mongoose.SchemaTypes.String,
-  dex: mongoose.SchemaTypes.Number,
+  sprite: mongoose.SchemaTypes.String,
   cp: mongoose.SchemaTypes.Number,
   isShadow: mongoose.SchemaTypes.Boolean,
 });

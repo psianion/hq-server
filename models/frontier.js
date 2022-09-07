@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
 
+const pokemonSchema = mongoose.Schema({
+  name: mongoose.SchemaTypes.String,
+  sprite: mongoose.SchemaTypes.String,
+  cp: mongoose.SchemaTypes.Number,
+  isShadow: mongoose.SchemaTypes.Boolean,
+});
+
 const frontierSchema = mongoose.Schema({
   team: mongoose.SchemaTypes.String,
   groupWins: {
@@ -22,14 +29,7 @@ const frontierSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.String,
     default: "default",
   },
-  players: {
-    player1: mongoose.SchemaTypes.String,
-    player2: mongoose.SchemaTypes.String,
-    player3: mongoose.SchemaTypes.String,
-    player4: mongoose.SchemaTypes.String,
-    player5: mongoose.SchemaTypes.String,
-    player6: mongoose.SchemaTypes.String,
-  },
+  pokemonTeam: [pokemonSchema],
 });
 
 module.exports = mongoose.model("Frontier", frontierSchema);

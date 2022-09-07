@@ -116,9 +116,6 @@ router.post("/create", async (req, res) => {
       try {
         const newTeam = await Frontier.create({
           team: data.frontierTeam,
-          players: {
-            player1: id,
-          },
         });
         await newTeam.save();
         User.findOne(
