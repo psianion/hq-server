@@ -8,6 +8,33 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/:id", async (req, res) => {
+  let data = {
+    teamData: {},
+    players: [],
+  };
+
+  data.teamData = await (await Frontier.find({ logo: req.params.id }))[0];
+
+  data.players = await User.find(
+    {
+      "game.pokemongo.bf.s6.team": data.teamData.team,
+    },
+    {
+      "game.pokemongo.bf.s6.isCaptain": 1,
+      "game.pokemongo.bf.s6.groupWins": 1,
+      "game.pokemongo.bf.s6.groupMatches": 1,
+      "game.pokemongo.bf.s6.knockoutWins": 1,
+      "game.pokemongo.bf.s6.knockoutMatches": 1,
+      "game.pokemongo.ign": 1,
+      "game.pokemongo.trainerTeam": 1,
+      "sprites.activeAvatar": 1,
+    }
+  );
+
+  res.json(data);
+});
+
 router.get("/team", async (req, res) => {
   let data = {
     teamData: {},
