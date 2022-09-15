@@ -82,6 +82,11 @@ const userSchema = mongoose.Schema({
           highestMMR: mongoose.SchemaTypes.Number,
           rank: mongoose.SchemaTypes.String,
         },
+        s12: {
+          currentMMR: mongoose.SchemaTypes.Number,
+          highestMMR: mongoose.SchemaTypes.Number,
+          rank: mongoose.SchemaTypes.String,
+        },
       },
     },
   },

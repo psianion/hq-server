@@ -35,12 +35,19 @@ router.post("/setup", async (req, res) => {
     .trim();
 
   const ign = data.ign.replace(/\s/g, "");
+  let region = null;
+  if (data.nationality === "in") {
+    region = "india";
+  } else {
+    region = null;
+  }
 
   User.findOneAndUpdate(
     { _id: id },
     {
       $set: {
         nationality: data.nationality,
+        region: region,
         game: {
           pokemongo: {
             ign: ign,
@@ -82,21 +89,21 @@ router.post("/set/gbl", async (req, res) => {
       console.log(err);
       res.json({ success: false, message: "MMR not set, server error!" });
     } else {
-      if (!data.game.pokemongo.gbl.s11.currentMMR) {
-        data.game.pokemongo.gbl.s11.currentMMR = mmr;
-        data.game.pokemongo.gbl.s11.highestMMR = mmr;
-        data.game.pokemongo.gbl.s11.rank = setRank(mmr);
+      if (!data.game.pokemongo.gbl.s12.currentMMR) {
+        data.game.pokemongo.gbl.s12.currentMMR = mmr;
+        data.game.pokemongo.gbl.s12.highestMMR = mmr;
+        data.game.pokemongo.gbl.s12.rank = setRank(mmr);
         data.save().catch((err) => console.log(err));
         res.json({ success: true, message: "MMR Set success!" });
       } else {
-        if (data.game.pokemongo.gbl.s11.highestMMR > mmr) {
-          data.game.pokemongo.gbl.s11.currentMMR = mmr;
+        if (data.game.pokemongo.gbl.s12.highestMMR > mmr) {
+          data.game.pokemongo.gbl.s12.currentMMR = mmr;
           data.save().catch((err) => console.log(err));
           res.json({ success: true, message: "MMR Set success!" });
         } else {
-          data.game.pokemongo.gbl.s11.currentMMR = mmr;
-          data.game.pokemongo.gbl.s11.highestMMR = mmr;
-          data.game.pokemongo.gbl.s11.rank = setRank(mmr);
+          data.game.pokemongo.gbl.s12.currentMMR = mmr;
+          data.game.pokemongo.gbl.s12.highestMMR = mmr;
+          data.game.pokemongo.gbl.s12.rank = setRank(mmr);
           data.save().catch((err) => console.log(err));
           res.json({ success: true, message: "MMR Set success!" });
         }
