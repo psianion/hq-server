@@ -8,13 +8,13 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/team", async (req, res) => {
   let data = {
     teamData: {},
     players: [],
   };
 
-  data.teamData = await (await Frontier.find({ logo: req.params.id }))[0];
+  data.teamData = await (await Frontier.find({ logo: req.query.id }))[0];
 
   data.players = await User.find(
     {
@@ -23,6 +23,7 @@ router.get("/:id", async (req, res) => {
     {
       "game.pokemongo.bf.s6.isCaptain": 1,
       "game.pokemongo.bf.s6.groupWins": 1,
+      "game.pokemongo.bf.s6.groupPokemon": 1,
       "game.pokemongo.bf.s6.groupMatches": 1,
       "game.pokemongo.bf.s6.knockoutWins": 1,
       "game.pokemongo.bf.s6.knockoutMatches": 1,
