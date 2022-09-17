@@ -8,6 +8,29 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/group", async (req, res) => {
+  User.find(
+    {
+      "game.pokemongo.bf.s6.group": `Group ${req.query.group}`,
+    },
+    {
+      "game.pokemongo.bf.s6.groupWins": 1,
+      "game.pokemongo.bf.s6.group": 1,
+      "game.pokemongo.bf.s6.team": 1,
+      "game.pokemongo.bf.s6.groupPokemon": 1,
+      "game.pokemongo.bf.s6.groupMatches": 1,
+      "game.pokemongo.ign": 1,
+      "game.pokemongo.trainerTeam": 1,
+      "sprites.activeAvatar": 1,
+    }
+  ).exec(function (err, model) {
+    res.json({
+      group: `Group ${req.query.group}`,
+      data: model,
+    });
+  });
+});
+
 router.get("/team", async (req, res) => {
   let data = {
     teamData: {},
