@@ -3,9 +3,17 @@ const User = require("../models/user");
 const Frontier = require("../models/frontier");
 
 router.get("/", async (req, res) => {
-  Frontier.find().exec(function (err, model) {
-    res.json(model);
-  });
+  Frontier.find()
+    .sort({
+      groupWins: "descending",
+    })
+    .exec(function (err, model) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(model);
+      }
+    });
 });
 
 router.get("/group", async (req, res) => {
