@@ -30,6 +30,7 @@ router.get("/frontier", async (req, res) => {
     {
       "game.pokemongo.bf.s6.groupWins": 1,
       "game.pokemongo.bf.s6.groupMatches": 1,
+      "game.pokemongo.bf.s6.team": 1,
       "game.pokemongo.bf.s6.knockoutWins": 1,
       "game.pokemongo.bf.s6.knockoutMatches": 1,
       "game.pokemongo.ign": 1,
