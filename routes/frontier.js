@@ -39,6 +39,29 @@ router.get("/group", async (req, res) => {
   });
 });
 
+router.get("/qf", async (req, res) => {
+  User.find(
+    {
+      "game.pokemongo.bf.s6.qf": `QF ${req.query.qf}`,
+    },
+    {
+      "game.pokemongo.bf.s6.knockoutWins": 1,
+      "game.pokemongo.bf.s6.qf": 1,
+      "game.pokemongo.bf.s6.team": 1,
+      "game.pokemongo.bf.s6.knockoutPokemon": 1,
+      "game.pokemongo.bf.s6.knockoutMatches": 1,
+      "game.pokemongo.ign": 1,
+      "game.pokemongo.trainerTeam": 1,
+      "sprites.activeAvatar": 1,
+    }
+  ).exec(function (err, model) {
+    res.json({
+      qf: `Quarter Finals ${req.query.qf}`,
+      data: model,
+    });
+  });
+});
+
 router.get("/team", async (req, res) => {
   let data = {
     teamData: {},
