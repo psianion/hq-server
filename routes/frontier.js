@@ -79,7 +79,7 @@ router.get("/sf", async (req, res) => {
     }
   ).exec(function (err, model) {
     res.json({
-      qf: `Semi Finals ${req.query.qf}`,
+      qf: `Semi Finals ${req.query.sf}`,
       data: model,
     });
   });
