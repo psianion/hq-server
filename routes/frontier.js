@@ -65,7 +65,7 @@ router.get("/qf", async (req, res) => {
 router.get("/sf", async (req, res) => {
   User.find(
     {
-      "game.pokemongo.bf.s6.qf": `SF ${req.query.sf}`,
+      "game.pokemongo.bf.s6.sf": `SF ${req.query.sf}`,
     },
     {
       "game.pokemongo.bf.s6.knockoutWins": 1,
