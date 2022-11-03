@@ -85,6 +85,29 @@ router.get("/sf", async (req, res) => {
   });
 });
 
+router.get("/finals", async (req, res) => {
+  User.find(
+    {
+      "game.pokemongo.bf.s6.finals": true,
+    },
+    {
+      "game.pokemongo.bf.s6.knockoutWins": 1,
+      "game.pokemongo.bf.s6.finals": 1,
+      "game.pokemongo.bf.s6.team": 1,
+      "game.pokemongo.bf.s6.knockoutPokemon": 1,
+      "game.pokemongo.bf.s6.knockoutMatches": 1,
+      "game.pokemongo.ign": 1,
+      "game.pokemongo.trainerTeam": 1,
+      "sprites.activeAvatar": 1,
+    }
+  ).exec(function (err, model) {
+    res.json({
+      qf: `Grand Finals`,
+      data: model,
+    });
+  });
+});
+
 router.get("/team", async (req, res) => {
   let data = {
     teamData: {},
