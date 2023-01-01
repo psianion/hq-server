@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 router.get("/", async (req, res) => {
   User.find(
-    { "game.pokemongo.gbl.s12": { $exists: true } },
+    { "game.pokemongo.gbl.s13": { $exists: true } },
     {
       "game.pokemongo.gbl": 1,
       "game.pokemongo.ign": 1,
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
     }
   )
     .sort({
-      "game.pokemongo.gbl.s12.currentMMR": "descending",
+      "game.pokemongo.gbl.s13.currentMMR": "descending",
     })
     .exec(function (err, model) {
       if (err) {
