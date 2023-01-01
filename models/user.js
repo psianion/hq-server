@@ -67,6 +67,9 @@ const userSchema = mongoose.Schema({
           finals: {
             type: mongoose.SchemaTypes.Boolean,
           },
+          winner: {
+            type: mongoose.SchemaTypes.Boolean,
+          },
           groupWins: {
             type: mongoose.SchemaTypes.Number,
             default: 0,
@@ -94,6 +97,11 @@ const userSchema = mongoose.Schema({
           rank: mongoose.SchemaTypes.String,
         },
         s12: {
+          currentMMR: mongoose.SchemaTypes.Number,
+          highestMMR: mongoose.SchemaTypes.Number,
+          rank: mongoose.SchemaTypes.String,
+        },
+        s13: {
           currentMMR: mongoose.SchemaTypes.Number,
           highestMMR: mongoose.SchemaTypes.Number,
           rank: mongoose.SchemaTypes.String,
